@@ -1,0 +1,25 @@
+workflows:
+  build-unsigned-ipa:
+    name: Build Unsigned IPA
+    max_build_duration: 30
+    environment:
+      xcode: "15.4"
+      cocoapods: default
+    scripts:
+      - name: Archive (no signing)
+        script: |
+          xcodebuild -project ImageLauncher.xcodeproj \
+            -scheme ImageLauncher -configuration Release \
+            -sdk iphoneos \
+            -archivePath build/ImageLauncher.xcarchive \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" \
+            archive
+      - name: Package unsigned IPA
+        script: |
+          cd build
+          rm -rf Payload ImageLauncher.ipa
+          mkdir Payload
+          cp -R "ImageLauncher.xcarchive/Products/Applications/ImageLauncher.app" Payload/
+          zip -r ImageLauncher.ipa Payload/
+    artifacts:
+      - build/ImageLauncher.ipa
