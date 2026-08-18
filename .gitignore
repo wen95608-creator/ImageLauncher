@@ -1,5 +1,7 @@
 .DS_Store
 build/
+# .xcodeproj 由 project.yml + xcodegen 生成，不入库
+ImageLauncher.xcodeproj/
 *.xcuserdata
 xcuserdata/
 *.mode1v3

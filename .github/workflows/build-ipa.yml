@@ -15,6 +15,18 @@ jobs:
       - name: Select Xcode 15
         run: sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
 
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Show project structure
+        run: |
+          ls -la
+          echo "---"
+          ls -la ImageLauncher.xcodeproj || true
+
       - name: Archive (no signing)
         run: |
           xcodebuild -project ImageLauncher.xcodeproj \
@@ -22,6 +34,7 @@ jobs:
             -sdk iphoneos \
             -archivePath build/ImageLauncher.xcarchive \
             CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
             archive
 
       - name: Package unsigned IPA
