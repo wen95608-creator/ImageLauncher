@@ -27,16 +27,6 @@ jobs:
           sips -s format png -z 1024 1024 "图标.jpg" --out "appicon-1024.png"
           ls -la
 
-      - name: Crop display image to iPhone 14 Pro aspect (1179x2556)
-        run: |
-          cd "ImageLauncher/Assets.xcassets/AppDisplayImage.imageset"
-          echo "before:"
-          sips -g pixelWidth -g pixelHeight "预设.JPEG"
-          sips -c 1179 2556 "预设.JPEG" --out "_cropped.jpg"
-          mv "_cropped.jpg" "预设.JPEG"
-          echo "after:"
-          sips -g pixelWidth -g pixelHeight "预设.JPEG"
-
       - name: Show project structure
         run: |
           ls -la
