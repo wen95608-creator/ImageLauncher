@@ -21,6 +21,12 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
+      - name: Convert AppIcon JPEG to 1024 PNG (sips)
+        run: |
+          cd "ImageLauncher/Assets.xcassets/AppIcon.appiconset"
+          sips -s format png -z 1024 1024 "图标.jpg" --out "appicon-1024.png"
+          ls -la
+
       - name: Show project structure
         run: |
           ls -la
